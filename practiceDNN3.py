@@ -9,8 +9,9 @@ import copy
 #우리가 가진 MNIST 데이터는 (1784)의 데이터 형태를 가짐
 #구분하려는 숫자의 종류가 총 10가지임
 '''
+1. 모델 저장 및 불러오는 함수 만들기 -> train 함수 안에서 이제 위에서 저장해놓은거 불러오고, 끝에서 저장하게! => 구현 완료.
+
 지금 구현이 안 된 것 : 
-1. 모델 저장 및 불러오는 함수 만들기 -> train 함수 안에서 이제 위에서 저장해놓은거 불러오고, 끝에서 저장하게!
 2. best accuracy 저장하기
 3. 그리고 이걸 서버컴퓨터의 GPU를 이용해서 돌려보기!!!
 '''
@@ -110,7 +111,7 @@ def train(log_interval, model, device, train_loader, optimizer, epoch):
         model.load_state_dict(checkpoint['model'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         epoch = checkpoint['epoch']
-        epoch = epoch + 1
+        epoch = epoch + 1 #여기 주의. 이미 저장된 부분(에포크)의 다음 에포크부터 돼야 하므로 이렇게 기록 및 불러옴.
 
 
 
@@ -174,7 +175,7 @@ for epoch in range(1, epochs):
     train(log_interval, model, device, train_loader, optimizer, epoch)
     test(log_interval, model, device, test_loader)
 
-    torch.save({'model' : model.state_dict(), 'optimizer' : optimizer.state_dict(), 'epoch': epoch }, './model_saved.pt')
+    torch.save({'model' : model.state_dict(), 'optimizer' : optimizer.state_dict(), 'epoch': epoch }, './model_saved.pt') #가장 마지막이 아니라 train 및 test가 끝난 매 에포크마다 저장.
 
 
 #torch.save({'model' : model.state_dict, 'optimizer' : optimizer.state_dict, 'epoch': epoch }, './model_saved.pt')
