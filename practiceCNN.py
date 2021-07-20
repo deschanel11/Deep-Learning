@@ -13,7 +13,7 @@ from torchvision import datasets, transforms
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.conv1 = nn.Conv2d(1, 32, 3, 1) #행벡터로 고치지 않고 2D 그대로 연산함. -> 그럼 Linear가 그 행벡터로 고쳐주는 거였나..?
+        self.conv1 = nn.Conv2d(1, 32, 3, 1) #행벡터로 고치지 않고 2D 그대로 연산함. -> Linear는 입력 및 출력을 정해줘서 벡터의 모양을 바꿔줌.
         self.conv2 = nn.Conv2d(32, 64, 3, 1)
         self.dropout1 = nn.Dropout2d(0.25)
         self.dropout2 = nn.Dropout2d(0.5)
